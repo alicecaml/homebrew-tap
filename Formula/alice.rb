@@ -16,15 +16,22 @@ class Alice < Formula
     # directory so the specified compiler version matches the version of the
     # compiler currently installed by homebrew. Patch some lockfiles to expect
     # whatever version of the compiler homebrew has installed.
+    ohai "Patching lock directory to build with homebrew's OCaml compiler..."
     system "patch", "-p1", "-i", "packaging/replace-compiler-version-with-template-in-lockdir.patch"
     ocaml_version = `ocamlopt.opt -version`.strip
     system "find", "dune.lock", "-type", "f", "-exec", "sed", "-i.old", "s/%%COMPILER_VERSION%%/#{ocaml_version}/", "{}", ";"
+
+    # Dune doesn't like it when we tamper with the lock directory. Remove the
+    # "dependency_hash" line from the manifest so it can't tell what we've
+    # done.
+    system "sed", "-i.old", "s/(dependency_hash .*)//", "dune.lock/lock.dune"
 
     # Dune's packaging mechanism is optimized for local development but doesn't
     # handle building a single package from a project containing multiple
     # packages. Hopefully this gets fixed, but in the meantime we have to
     # remove the lockfiles for packages that aren't dependencies of the "alice"
     # package (the additional packages are used for testing Alice).
+    ohai "Removing test-only dependencies from lock directory..."
     [
       "base.v0.17.3.pkg",
       "csexp.1.5.2.pkg",
@@ -55,15 +62,11 @@ class Alice < Formula
       system "rm", "dune.lock/#{f}"
     }
 
-    # Dune doesn't like it when we tamper with the lock directory. Remove the
-    # "dependency_hash" line from the manifest so it can't tell what we've
-    # done.
-    system "sed", "-i.old", "s/(dependency_hash .*)//", "dune.lock/lock.dune"
-
     # Enable experimental feature so we get build progress to help us debug.
     ENV["DUNE_CONFIG__PKG_BUILD_PROGRESS"] = "enabled"
 
     # Build and install Alice!
+    ohai "Building and installing Alice..."
     system "dune", "build", "@install", "--release", "--only-packages", "alice"
     system "dune", "install", "--prefix=#{prefix}", "alice"
   end
