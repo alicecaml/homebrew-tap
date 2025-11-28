@@ -26,42 +26,6 @@ class Alice < Formula
     # done.
     system "sed", "-i.old", "s/(dependency_hash .*)//", "dune.lock/lock.dune"
 
-    # Dune's packaging mechanism is optimized for local development but doesn't
-    # handle building a single package from a project containing multiple
-    # packages. Hopefully this gets fixed, but in the meantime we have to
-    # remove the lockfiles for packages that aren't dependencies of the "alice"
-    # package (the additional packages are used for testing Alice).
-    ohai "Removing test-only dependencies from lock directory..."
-    [
-      "base.v0.17.3.pkg",
-      "csexp.1.5.2.pkg",
-      "dune-configurator.3.20.2.pkg",
-      "jane-street-headers.v0.17.0.pkg",
-      "jst-config.v0.17.0.pkg",
-      "ocaml-compiler-libs.v0.17.0.pkg",
-      "ocaml_intrinsics_kernel.v0.17.1.pkg",
-      "ppx_assert.v0.17.0.pkg",
-      "ppx_base.v0.17.0.pkg",
-      "ppx_cold.v0.17.0.pkg",
-      "ppx_compare.v0.17.0.pkg",
-      "ppx_derivers.1.2.1.pkg",
-      "ppx_enumerate.v0.17.0.pkg",
-      "ppx_expect.v0.17.3.pkg",
-      "ppx_globalize.v0.17.2.pkg",
-      "ppx_hash.v0.17.0.pkg",
-      "ppx_here.v0.17.0.pkg",
-      "ppx_inline_test.v0.17.1.pkg",
-      "ppx_optcomp.v0.17.1.pkg",
-      "ppx_sexp_conv.v0.17.1.pkg",
-      "ppxlib.0.37.0.pkg",
-      "ppxlib_jane.v0.17.4.pkg",
-      "sexplib0.v0.17.0.pkg",
-      "stdio.v0.17.0.pkg",
-      "time_now.v0.17.0.pkg",
-    ].each { |f|
-      system "rm", "dune.lock/#{f}"
-    }
-
     # Enable experimental feature so we get build progress to help us debug.
     ENV["DUNE_CONFIG__PKG_BUILD_PROGRESS"] = "enabled"
 
