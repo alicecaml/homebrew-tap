@@ -31,7 +31,7 @@ class Alice < Formula
 
     # Build and install Alice!
     ohai "Building and installing Alice..."
-    system "dune", "build", "@install", "--release", "--only-packages", "alice"
+    system "dune", "build", "@install", "--cache=disabled", "--release", "--only-packages", "alice"
     system "dune", "install", "--prefix=#{prefix}", "alice"
   end
 
