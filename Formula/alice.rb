@@ -19,7 +19,8 @@ class Alice < Formula
     ohai "Patching lock directory to build with homebrew's OCaml compiler..."
     system "patch", "-p1", "-i", "packaging/replace-compiler-version-with-template-in-lockdir.patch"
     ocaml_version = `ocamlopt.opt -version`.strip
-    system "find", "dune.lock", "-type", "f", "-exec", "sed", "-i.old", "s/%%COMPILER_VERSION%%/#{ocaml_version}/", "{}", ";"
+    system "find", "dune.lock", "-type", "f", "-exec", "sed", "-i.old", "s/%%COMPILER_VERSION%%/#{ocaml_version}/",
+      "{}", ";"
 
     # Dune doesn't like it when we tamper with the lock directory. Remove the
     # "dependency_hash" line from the manifest so it can't tell what we've
