@@ -1,8 +1,8 @@
 class Alice < Formula
   desc "Radical OCaml build system"
   homepage "https://github.com/alicecaml/alice"
-  url "https://github.com/alicecaml/alice/archive/refs/tags/0.2.0.tar.gz"
-  sha256 "057b9bde38a0faeb858efb83eeca339cb1a4bd0129258ac545541ccf39260777"
+  url "https://github.com/alicecaml/alice/archive/refs/tags/0.3.0.tar.gz"
+  sha256 "2f31ff9b6067da1eb582f254d05ce6e8d966587144e2c79cc77d503293593e62"
   license "MIT"
 
   depends_on "dune" => :build
