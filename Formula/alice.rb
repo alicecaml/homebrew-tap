@@ -1,8 +1,8 @@
 class Alice < Formula
   desc "Radical OCaml build system"
   homepage "https://github.com/alicecaml/alice"
-  url "https://github.com/alicecaml/alice/archive/refs/tags/0.3.0.tar.gz"
-  sha256 "2f31ff9b6067da1eb582f254d05ce6e8d966587144e2c79cc77d503293593e62"
+  url "https://github.com/alicecaml/alice/archive/refs/tags/0.4.0.tar.gz"
+  sha256 "ba44395371207b08bf0725cbc493243bfb08b3f4fdbac0be67202b8965a099d4"
   license "MIT"
 
   depends_on "dune" => :build
@@ -54,7 +54,6 @@ class Alice < Formula
       "ppx_sexp_conv.v0.17.1.pkg",
       "ppxlib.0.37.0.pkg",
       "ppxlib_jane.v0.17.4.pkg",
-      "sexplib0.v0.17.0.pkg",
       "stdio.v0.17.0.pkg",
       "time_now.v0.17.0.pkg",
     ].each { |f|
