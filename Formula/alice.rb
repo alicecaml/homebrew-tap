@@ -67,6 +67,18 @@ class Alice < Formula
     ohai "Building Alice..."
     system "dune", "build", "@install", "--cache=disabled", "--release", "-j", ENV["HOMEBREW_MAKE_JOBS"], "--only-packages", "alice"
     system "dune", "install", "--prefix=#{prefix}", "alice"
+    generate_completions_from_executable(bin/"alice", "internal", "completions", "bash",
+      "--program-name=alice",
+      "--program-exe-for-reentrant-query=alice",
+      "--global-symbol-prefix=__alice",
+      "--no-command-hash-in-function-names",
+      "--no-comments",
+      "--no-whitespace",
+      "--minify-global-names",
+      "--minify-local-variables",
+      "--optimize-case-statements",
+      shell_parameter_format: :none,
+      shells: [:bash])
   end
 
   test do
