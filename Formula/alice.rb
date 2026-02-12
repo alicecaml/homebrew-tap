@@ -65,7 +65,7 @@ class Alice < Formula
 
     # Build and install Alice!
     ohai "Building Alice..."
-    system "dune", "build", "@install", "--cache=disabled", "--release", "--only-packages", "alice"
+    system "dune", "build", "@install", "--cache=disabled", "--release", "-j", ENV["HOMEBREW_MAKE_JOBS"], "--only-packages", "alice"
     system "dune", "install", "--prefix=#{prefix}", "alice"
   end
 
